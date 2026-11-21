@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SneakDev Hub</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:#09090f;color:#f4f1ff}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;padding:12px 18px;background:#0d0d15ee;border-bottom:1px solid #292638;backdrop-filter:blur(12px)}
+.logo{width:46px;height:46px;object-fit:contain}.brand{margin-left:10px;font-weight:800;font-size:20px}.brand small{display:block;color:#a7a1b9;font-size:11px;font-weight:500}
+nav{margin-left:auto;display:flex;gap:7px}nav a{color:#ddd8ef;text-decoration:none;padding:9px 12px;border-radius:10px}nav a:hover{background:#211d36}
+.hero{max-width:1100px;margin:auto;padding:65px 20px 35px;display:flex;align-items:center;gap:35px}.hero h1{font-size:clamp(36px,7vw,70px);margin:0 0 12px}.hero p{color:#aaa4b9;font-size:17px;max-width:650px}.hero img{width:210px;filter:drop-shadow(0 15px 30px #0008)}
+.container{max-width:1100px;margin:auto;padding:20px}.search{width:100%;padding:14px 16px;border-radius:13px;border:1px solid #2b2938;background:#12121b;color:white;outline:0;margin-bottom:18px}.search:focus{border-color:#9581ff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:#12121b;border:1px solid #292638;border-radius:16px;padding:20px;transition:.2s}.card:hover{transform:translateY(-3px);border-color:#7967d8}.icon{font-size:28px}.card h2{font-size:18px;margin:12px 0 7px}.card p{color:#a9a4b7;font-size:13px;line-height:1.5}.btn{display:inline-block;margin-top:10px;padding:9px 12px;background:#735de1;color:white;text-decoration:none;border-radius:9px;border:0;cursor:pointer}
+.section{margin-top:35px}.section h2{font-size:24px}.links{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.link{padding:15px;background:#12121b;border:1px solid #292638;border-radius:12px;color:white;text-decoration:none}.link span{color:#a9a4b7;font-size:12px;display:block;margin-top:4px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#211d36;border:1px solid #6656ae;padding:11px 16px;border-radius:10px;display:none}
+footer{text-align:center;color:#777184;padding:45px 20px}@media(max-width:800px){.hero{padding-top:35px}.hero img{width:130px}.grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){nav{display:none}.hero{display:block;text-align:center}.hero img{margin-top:20px}.grid,.links{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<img class="logo" src="mascot.png" alt="SneakDev">
+<div class="brand">SneakDev<small>полезные инструменты</small></div>
+<nav><a href="#tools">Инструменты</a><a href="#links">Ссылки</a></nav>
+</header>
+<section class="hero"><div><h1>Привет, SneakDev 👋</h1><p>Один удобный сайт для полезных инструментов и быстрых ссылок.</p></div><img src="mascot.png" alt="Маскот SneakDev"></section>
+<div class="container">
+<input id="search" class="search" placeholder="🔎 Найти инструмент...">
+<section id="tools" class="section"><h2>🛠 Полезные инструменты</h2><div class="grid">
+<div class="card searchable"><div class="icon">🔐</div><h2>Генератор паролей</h2><p>Создай случайный пароль для тестовых аккаунтов и проектов.</p><button class="btn" onclick="password()">Создать</button></div>
+<div class="card searchable"><div class="icon">🎨</div><h2>Цветовой помощник</h2><p>Выбери цвет и быстро получи HEX-код.</p><input type="color" id="color" value="#9b87ff" onchange="showColor()" style="width:100%;height:42px"><p id="hex">#9B87FF</p></div>
+<div class="card searchable"><div class="icon">⏱️</div><h2>Таймер</h2><p>Простой таймер для учёбы, разработки или других задач.</p><button class="btn" onclick="timer()">1 минута</button></div>
+<div class="card searchable"><div class="icon">📝</div><h2>Заметки</h2><p>Напиши идею — она сохранится прямо в браузере.</p><textarea id="notes" style="width:100%;height:80px;background:#0b0b11;color:white;border:1px solid #302d42;border-radius:9px;padding:9px"></textarea></div>
+</div></section>
+<section id="links" class="section"><h2>🔗 Быстрые ссылки</h2><div class="links">
+<a class="link" href="https://github.com/sarsembekowa245-star/SneakDev" target="_blank">GitHub SneakDev<span>Исходники и релизы</span></a>
+<a class="link" href="https://t.me/sneakdevs" target="_blank">Telegram SneakDev<span>Новости и обновления</span></a>
+</div></section>
+</div>
+<div id="toast"></div><footer> SneakDev © 2026 · Сделано с 🐱</footer>
+<script>
+const notes=document.getElementById('notes');notes.value=localStorage.getItem('sneak_notes')||'';notes.oninput=()=>localStorage.setItem('sneak_notes',notes.value);
+document.getElementById('search').oninput=e=>{let q=e.target.value.toLowerCase();document.querySelectorAll('.searchable').forEach(x=>x.style.display=x.innerText.toLowerCase().includes(q)?'block':'none')};
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1800)}
+function password(){let a='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';let p='';for(let i=0;i<16;i++)p+=a[Math.floor(Math.random()*a.length)];toast('Пароль: '+p);navigator.clipboard?.writeText(p)}
+function showColor(){let v=document.getElementById('color').value.toUpperCase();document.getElementById('hex').textContent=v;toast('HEX скопирован: '+v);navigator.clipboard?.writeText(v)}
+let interval;function timer(){clearInterval(interval);let n=60;toast('Таймер запущен на 1 минуту');interval=setInterval(()=>{n--;if(n<=0){clearInterval(interval);toast('⏰ Время вышло!')}},1000)}
+</script>
+</body></html>
